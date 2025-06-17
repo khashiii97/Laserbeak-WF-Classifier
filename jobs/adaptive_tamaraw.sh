@@ -23,4 +23,10 @@ cd /home/kka151/projects/def-t55wang/kka151/Laserbeak-WF-Classifier
 
 
 # Execute your deep learning script
-python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 1
+
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 2
+
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 3
+
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 25
