@@ -1064,7 +1064,7 @@ def load_data(dataset,
     elif dataset == 'adaptive_tamaraw':
         data_obj = partial(AdaptiveTamaraw,
                            root, 
-                            defense_mode = 'tamaraw',
+                            defense_mode = 'adaptive_tamaraw',
                             **kwargs)
     elif dataset == "gong-50k":
         data_obj = partial(Surakav, 

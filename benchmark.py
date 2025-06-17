@@ -198,8 +198,8 @@ if __name__ == "__main__":
     """
     args = parse_args()
 
-    if args.data_dir == 'cc': # setting the datadir to cc path
-        args.data_dir = '/home/kka151/scratch/WF_representation_learning_data/laserbeak'
+    
+        
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -214,7 +214,11 @@ if __name__ == "__main__":
     # else: checkpoint path and fname will be defined later if missing
 
     eval_only = args.eval
-    root = args.data_dir
+    if args.data_dir == 'cc': # setting the datadir to cc path
+        root = '/home/kka151/scratch/WF_representation_learning_data/laserbeak'
+    else:
+        root = args.data_dir
+    
     checkpoint_dir = args.ckpt_dir
     results_dir = args.results_dir
     dataset = args.dataset
@@ -307,7 +311,8 @@ if __name__ == "__main__":
                                                        keep_tmp = args.keep_tmp,
                                                        subpage_as_labels = args.subpages,
                                                        te_chunk_no = te_chunk_no,
-                                                       config_num = args.tamaraw_config
+                                                       config_num = args.tamaraw_config,
+                                                       root = root
                                                 )
     gc.collect()
     unm_class = classes-1 if include_unm else -1

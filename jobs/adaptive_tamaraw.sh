@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=two_step_vs_rf   # Job name
+#SBATCH --job-name=two_step_vs_lb   # Job name
 #SBATCH --gres=gpu:1                   # Request GPU resource
 #SBATCH --nodes=1                      # Run all processes on a single node
 #SBATCH --ntasks=1                     # Run a single task        
@@ -23,10 +23,10 @@ cd /home/kka151/projects/def-t55wang/kka151/Laserbeak-WF-Classifier
 
 
 # Execute your deep learning script
-python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 1
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive_tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment1 --tamaraw_config 1
 
-python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 2
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive_tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment2 --tamaraw_config 2
 
-python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 3
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive_tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment3 --tamaraw_config 3
 
-python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive-tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment --tamaraw_config 25
+python3 benchmark.py --data_dir cc --config ./configs/laserbeak.json --dataset adaptive_tamaraw --epochs 20 --multisamples 10 --exp_name my_experiment25 --tamaraw_config 25
