@@ -335,6 +335,8 @@ class GenericWFDataset(data.Dataset):
             tr_unm_idx = np.arange(unm_start_idx, unm_start_idx + unm_tr_count)
 
         if train:
+            
+            
             dataset, labels, ids, classes = load_full_dataset(root,
                     mon_raw_data_name = mon_raw_data_name,
                     unm_raw_data_name = unm_raw_data_name,
@@ -345,6 +347,7 @@ class GenericWFDataset(data.Dataset):
                     class_divisor = class_divisor,
                     class_selector = class_selector,
                     **kwargs)
+            
         else:
             dataset, labels, ids, classes = load_full_dataset(root,
                     mon_raw_data_name = mon_raw_data_name,
@@ -568,6 +571,31 @@ class Surakav(GenericWFDataset):
             **kwargs
         )
 
+class AdaptiveTamaraw(GenericWFDataset):
+    def __init__(self, root, *args, 
+            mon_tr_count = 900, unm_tr_count = 9000,
+            mon_te_count = 100, unm_te_count = 1000,
+            defense_mode = 'undef',
+            **kwargs):
+
+        config_number = kwargs['config_num']
+        data_dir = join(root, 'adaptive_tamaraw')
+        mon_raw_data_name = f'{defense_mode}-mon_{config_number}.pkl'
+        unm_raw_data_name = f'{defense_mode}-unm.pkl'
+
+        class_divisor = 1
+
+        super().__init__(
+            data_dir,
+            mon_raw_data_name,
+            unm_raw_data_name,
+            mon_tr_count, unm_tr_count,
+            mon_te_count, unm_te_count,
+            *args, 
+            class_divisor = class_divisor, 
+            **kwargs
+        )
+
 
 # # # #
 #
@@ -600,6 +628,8 @@ def load_full_dataset(
     all_X = None
     all_y = None
     if include_mon:
+
+        
         all_X, all_y = load_mon(data_dir, mon_raw_data_name, mon_sample_idx, 
                                 min_length = min_length, 
                                 multisample_count = multisample_count,
@@ -610,6 +640,7 @@ def load_full_dataset(
 
         class_names += [f'mon-{i}' for i in range(len(np.unique(all_y)))]
 
+    
     # # # # # #
     # Unmonitored Websites
     # # # # # #
@@ -709,7 +740,7 @@ def load_mon(data_dir, mon_raw_data_name, sample_idx,
                         all_X.extend(cls_X[i])
                         all_y.extend(cls_y[i])
         else:
-            for i in range(cls_X):
+            for i in range(len(cls_X)):
                 all_X.extend(cls_X[i])
                 all_y.extend(cls_y[i])
 
@@ -834,7 +865,7 @@ DATASET_CHOICES = ['be', 'be-front', 'be-interspace', 'be-regulator', 'be-ts2', 
                    'webmd', 'webmd-300k', 'webmd-front', 'webmd-front-300k', 'webmd-interspace', 'webmd-interspace-300k',
                    'gong', 'gong-surakav4', 'gong-surakav6', 'gong-front', 'gong-tamaraw',
                    'gong-50k', 'gong-surakav4-50k', 'gong-surakav6-50k', 'gong-front-50k', 'gong-tamaraw-50k', 
-                   ]
+                   'adaptive_tamaraw']
 DATASET_CHOICES += ['be-slow', 'be-fast', 
                     'be-front-slow', 'be-front-fast', 
                     'be-interspace-fast', 'be-interspace-slow', 
@@ -1205,9 +1236,10 @@ def load_data(dataset,
                             **kwargs,
                 )
 
-
+    
     trainset = data_obj(train=True, **tr_transforms) 
     testset = data_obj(train=False, **te_transforms) 
+    
     classes = len(testset.classes)
 
     if val_perc > 0.:
