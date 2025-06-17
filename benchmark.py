@@ -112,6 +112,11 @@ def parse_args():
                         type = str, 
                         choices = DATASET_CHOICES,
                         help = "Select dataset for train & test.")
+    
+    parser.add_argument('--tamaraw_config', 
+                        default = None, 
+                        type = int,
+                        help = "the config number for adaptive tamaraw")
     parser.add_argument('--openworld', 
                         action = 'store_true', 
                         default = False,
@@ -299,6 +304,7 @@ if __name__ == "__main__":
                                                        keep_tmp = args.keep_tmp,
                                                        subpage_as_labels = args.subpages,
                                                        te_chunk_no = te_chunk_no,
+                                                       config_num = args.tamaraw_config
                                                 )
     gc.collect()
     unm_class = classes-1 if include_unm else -1
